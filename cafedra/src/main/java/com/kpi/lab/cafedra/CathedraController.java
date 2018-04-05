@@ -1,7 +1,14 @@
 package com.kpi.lab.cafedra;
 
+import com.kpi.lab.faculty.Faculty;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 public class CathedraController {
@@ -17,17 +24,22 @@ public class CathedraController {
     }
 
     @GetMapping("/api/cathedras")
-    public String getFaculties(){
-        return cathedraService.getAll().toString();
+    public List<Cathedra> getFaculties(){
+        return cathedraService.getList();
     }
 
     @GetMapping("/api/cathedras/{id}")
-    public String getFaculty(@PathVariable Integer id){
-        return cathedraService.getById(id).toString();
+    public Cathedra getFaculty(@PathVariable Integer id){
+        return cathedraService.getCathedra(id).get();
     }
 
-    @PostMapping("/api/cathedra")
-    public String createFaculty(@RequestBody Cathedra cathedra){
-        return cathedraService.create(cathedra);
+    @PostMapping("/api/cathedras")
+    public ResponseEntity createFaculty(@RequestBody Cathedra newCathedra, HttpServletRequest servletRequest){
+        Cathedra cathedra = cathedraService.createCathedra(newCathedra.getName(), newCathedra.getFaculty_id());
+        URI uri = ServletUriComponentsBuilder.fromServletMapping(servletRequest)
+                .path("/api/cathedras/{id}")
+                .buildAndExpand(cathedra.getId())
+                .toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
