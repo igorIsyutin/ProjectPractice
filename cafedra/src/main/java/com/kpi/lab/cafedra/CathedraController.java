@@ -44,15 +44,12 @@ public class CathedraController {
         return ResponseEntity.created(uri).build();
     }
 
-    @Value("${my.message}")
-    private String message;
-
-    @Value("${my.allMessage}")
-    private String allMessage;
+    @Autowired
+    private CathProp cathProp;
 
     @GetMapping("/api/cathedra/config")
     public String getConfigMessage(){
-        return message + System.lineSeparator() + allMessage;
+        return cathProp.getMessage() + System.lineSeparator() + cathProp.getAllMessage();
     }
 
 }
