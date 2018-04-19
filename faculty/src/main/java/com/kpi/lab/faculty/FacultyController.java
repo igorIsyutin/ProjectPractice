@@ -43,14 +43,15 @@ public class FacultyController {
         return ResponseEntity.created(uri).build();
     }
 
-    //@Value("${my.message}")
+    @Value("${my.message}")
     private String config;
-    @Autowired
-    private FacultyProp facultyProp;
+
+    @Value("${my.allMessage}")
+    private String allMessage;
 
     @GetMapping("/api/faculty/config")
     public String getConfig(){
-        return facultyProp.getPropety();
+        return config + System.lineSeparator() + allMessage;
     }
 
 //    @PostMapping("/api/faculties/{id}")

@@ -3,6 +3,7 @@ package com.kpi.lab.cafedra;
 import com.kpi.lab.faculty.Faculty;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -42,4 +43,16 @@ public class CathedraController {
                 .toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @Value("${my.message}")
+    private String message;
+
+    @Value("${my.allMessage}")
+    private String allMessage;
+
+    @GetMapping("/api/cathedra/config")
+    public String getConfigMessage(){
+        return message + System.lineSeparator() + allMessage;
+    }
+
 }
