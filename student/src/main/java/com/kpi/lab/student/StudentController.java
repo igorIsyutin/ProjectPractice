@@ -15,18 +15,18 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping("/api/students")
-    public List<Student> getFaculties(){
+    public List<Student> getStudents(){
         return studentService.getList();
 
     }
 
     @GetMapping("/api/students/{id}")
-    public Student getFaculty(@PathVariable Integer id){
+    public Student getStudent(@PathVariable Integer id){
         return studentService.getStudent(id).get();
     }
 
     @PostMapping("/api/students")
-    public ResponseEntity createFaculty(@RequestBody Student newStudent, HttpServletRequest servletRequest){
+    public ResponseEntity createStudent(@RequestBody Student newStudent, HttpServletRequest servletRequest){
         Student student = studentService.createStudent(newStudent.getName(),newStudent.getSurname(), newStudent.getAge(),newStudent.getCathedraId());
         URI uri = ServletUriComponentsBuilder.fromServletMapping(servletRequest)
                 .path("/api/students/{id}")

@@ -24,17 +24,17 @@ public class CathedraController {
     }
 
     @GetMapping("/api/cathedras")
-    public List<Cathedra> getFaculties(){
+    public List<Cathedra> getCathedras(){
         return cathedraService.getList();
     }
 
     @GetMapping("/api/cathedras/{id}")
-    public Cathedra getFaculty(@PathVariable Integer id){
+    public Cathedra getCathedra(@PathVariable Integer id){
         return cathedraService.getCathedra(id).get();
     }
 
     @PostMapping("/api/cathedras")
-    public ResponseEntity createFaculty(@RequestBody Cathedra newCathedra, HttpServletRequest servletRequest){
+    public ResponseEntity createCathedra(@RequestBody Cathedra newCathedra, HttpServletRequest servletRequest){
         Cathedra cathedra = cathedraService.createCathedra(newCathedra.getName(), newCathedra.getFaculty_id());
         URI uri = ServletUriComponentsBuilder.fromServletMapping(servletRequest)
                 .path("/api/cathedras/{id}")
